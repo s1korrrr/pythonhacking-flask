@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+
+    <h1>Header!!!</h1>
+    {{ haha.dupa }}
+
+    <p>Lista zakupów</p>
+    <ul>
+        {% for item in zakupy %}
+            <li>{{ item }} | {{  item|reverse }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

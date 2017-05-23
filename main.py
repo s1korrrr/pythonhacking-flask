@@ -35,5 +35,14 @@ def formularz():
     if request.method == 'GET':
         return render_template('form.html')
 
+
+@app.route('/szablony')
+def szablony():
+    lista_zakupow = ['mleko', 'jajka', 'browar']
+
+    return render_template('szablon.html', haha={'dupa': 'hahaha, jednak nie'}, zakupy=lista_zakupow)
+
+
 if __name__ == "__main__":
     app.run()
+
