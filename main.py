@@ -1,7 +1,15 @@
 import time
 from flask import Flask, render_template, jsonify, request
-from db_init import cars
+from database import db_session, init_db
+from models.car import Car
+
 app = Flask(__name__)
+
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db_session.remove()
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -37,13 +45,25 @@ def formularz():
 @app.route('/szablon')
 def szablony():
     lista_zakupow = ['mleko', 'jajka']
-
     return render_template('szablon.html', haha={'costam': 'hahaha, jednak nie'}, zakupy=lista_zakupow)
 
 
-@app.route('/car_club')
+@app.route('/list_cars')
 def car_club():
+    cars = Car.query.all()
     return render_template('car_club.html', auta=cars)
+
+
+@app.route('/add_car', methods=['POST'])
+def add_car():
+    data = request.json
+    c = Car(id=data['id'], make=data['make'],
+            model=data['model'], plates=data['plates'],
+            dmv_number=data['dmv'], year=data['year'])
+    db_session.add(c)
+    db_session.commit()
+    return 'Success\n'
+
 
 @app.route('/car_form')
 def car_form():
@@ -53,6 +73,6 @@ def car_form():
         return render_template('form.html')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
+    init_db()
     app.run()
-
