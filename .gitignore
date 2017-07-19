@@ -98,3 +98,7 @@ ENV/
 /site
 idea/*
 .idea
+
+# project files
+local_settings.py
+car_club.db

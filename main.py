@@ -1,9 +1,13 @@
-import time
+import os, time
 from flask import Flask, render_template, jsonify, request, url_for
-from database import db_session, init_db
+from database import db_session, init_engine, init_db
 from models.car import Car
+from random import randint
 
 app = Flask(__name__)
+app.config.from_object('default_settings')
+if 'LOCAL_SETTINGS' in os.environ:
+    app.config.from_envvar('LOCAL_SETTINGS')
 
 
 @app.teardown_appcontext
@@ -74,5 +78,9 @@ def car_form():
 
 
 if __name__ == '__main__':
+    init_engine(app.config['DATABASE_URI'])
     init_db()
-    app.run()
+    app.run(
+        host=app.config.get('SERVER_HOST'),
+        port=app.config.get('SERVER_PORT'),
+    )
