@@ -1,5 +1,5 @@
 import time
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, url_for
 from database import db_session, init_db
 from models.car import Car
 
@@ -39,7 +39,7 @@ def formularz():
     if request.method == 'POST':
         return render_template('site.html', name=request.form['name'])
     if request.method == 'GET':
-        return render_template('form.html')
+        return render_template('form.html', action_url=url_for('formularz'))
 
 
 @app.route('/szablon')
@@ -70,7 +70,7 @@ def car_form():
     if request.method == 'POST':
         return render_template('car_club.html', name=request.form['name'])
     if request.method == 'GET':
-        return render_template('form.html')
+        return render_template('form.html', action_url=url_for('car_form'))
 
 
 if __name__ == '__main__':
