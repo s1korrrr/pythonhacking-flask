@@ -1,8 +1,18 @@
-import time
-from flask import Flask, render_template, jsonify, request
-
+import os, time
+from flask import Flask, render_template, jsonify, request, url_for
+from database import db_session, init_engine, init_db
+from models.car import Car
+from random import randint
 
 app = Flask(__name__)
+app.config.from_object('default_settings')
+if 'LOCAL_SETTINGS' in os.environ:
+    app.config.from_envvar('LOCAL_SETTINGS')
+
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db_session.remove()
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -33,16 +43,44 @@ def formularz():
     if request.method == 'POST':
         return render_template('site.html', name=request.form['name'])
     if request.method == 'GET':
-        return render_template('form.html')
+        return render_template('form.html', action_url=url_for('formularz'))
 
 
-@app.route('/szablony')
+@app.route('/szablon')
 def szablony():
-    lista_zakupow = ['mleko', 'jajka', 'browar']
+    lista_zakupow = ['mleko', 'jajka']
+    return render_template('szablon.html', haha={'costam': 'hahaha, jednak nie'}, zakupy=lista_zakupow)
 
-    return render_template('szablon.html', haha={'dupa': 'hahaha, jednak nie'}, zakupy=lista_zakupow)
+
+@app.route('/list_cars')
+def car_club():
+    cars = Car.query.all()
+    return render_template('car_club.html', auta=cars)
 
 
-if __name__ == "__main__":
-    app.run()
+@app.route('/add_car', methods=['POST'])
+def add_car():
+    data = request.json
+    c = Car(id=data['id'], make=data['make'],
+            model=data['model'], plates=data['plates'],
+            dmv_number=data['dmv'], year=data['year'])
+    db_session.add(c)
+    db_session.commit()
+    return 'Success\n'
 
+
+@app.route('/car_form')
+def car_form():
+    if request.method == 'POST':
+        return render_template('car_club.html', name=request.form['name'])
+    if request.method == 'GET':
+        return render_template('form.html', action_url=url_for('car_form'))
+
+
+if __name__ == '__main__':
+    init_engine(app.config['DATABASE_URI'])
+    init_db()
+    app.run(
+        host=app.config.get('SERVER_HOST'),
+        port=app.config.get('SERVER_PORT'),
+    )
