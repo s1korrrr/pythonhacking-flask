@@ -5,13 +5,12 @@ import requests
 
 @pytest.fixture(name='config')
 def configuration():
-    return {
-        'host': 'localhost',
-        'port': 5000
-    }
+    """Test configuration fixture"""
+    return {'host': 'localhost', 'port': 5000}
 
 
 def test_add_car(config):
+    """Test for adding car"""
     host = config['host']
     port = config['port']
     endpoint = 'add_car'
