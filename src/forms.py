@@ -1,13 +1,16 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, PasswordField,\
     BooleanField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length, Regexp, \
+    EqualTo, Email, ValidationError
+
+from src.models import Owner
 
 
 class CarForm(FlaskForm):
     """Form for adding new car"""
-    plate = StringField('rejestracja', validators=[DataRequired()])
-    description = StringField('opis', validators=[DataRequired()])
+    plate = StringField('Nr rejestracji', validators=[DataRequired()])
+    description = StringField('Nazwa auta', validators=[DataRequired()])
 
     def validate(self) -> bool:
         """Additional validation goes here"""
@@ -22,3 +25,31 @@ class LoginForm(FlaskForm):
     password = PasswordField('Hasło', validators=[DataRequired()])
     remember_me = BooleanField('Pozostań zalogowany')
     submit = SubmitField('Zaloguj')
+
+
+class SignInForm(FlaskForm):
+    owner = StringField(
+        'Użytkownik', validators=[
+            DataRequired(), Length(3, 80),
+            Regexp('^[A-Za-z0-9_]{3,}$',
+                   message='Dopuszczalne litery, '
+                           'cyfry oraz podkreślenia.')
+        ]
+    )
+    email = StringField('Email', validators=[DataRequired(), Length(1, 120),
+                                             Email()])
+    password = PasswordField(
+        'Hasło', validators=[
+            DataRequired(),
+            EqualTo('password2', message='Hasła muszą się zgadzać.')
+        ]
+    )
+    password2 = PasswordField('Potwierdz hasło', validators=[DataRequired()])
+
+    def validate_email(self, email_field):
+        if Owner.query.filter_by(email=email_field.data).first():
+            raise ValidationError('Adres email jest już zajęcty.')
+
+    def validate_owner(self, owner_field):
+        if Owner.query.filter_by(email=owner_field.data).first():
+            raise ValidationError('Uzytkownik jest już zajęcty.')

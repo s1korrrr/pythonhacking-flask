@@ -8,7 +8,7 @@ from flask_login import login_required, login_user,\
     logout_user, current_user
 
 from src import app, db, login_manager
-from src.forms import CarForm, LoginForm
+from src.forms import CarForm, LoginForm, SignInForm
 from src.models import Car, Owner
 
 
@@ -22,6 +22,22 @@ def load_user(owner_id):
 def index():
     """Index view"""
     return render_template('index.html', new_cars=Car.newest(5))
+
+
+@app.route('/signup', methods=['GET', 'POST'])
+def sign_up():
+    form = SignInForm()
+    if form.validate_on_submit():
+        owner = Owner(
+            name=form.owner.data,
+            password=form.password.data,
+            email=form.email.data,
+        )
+        db.session.add(owner)
+        db.session.commit()
+        flash('Rejestracja zakończyła się pomyślnie!')
+        return redirect(url_for('login'))
+    return render_template('sign_up.html', form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])

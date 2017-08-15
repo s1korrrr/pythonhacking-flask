@@ -26,8 +26,12 @@
         <nav>
             <ul>
                 <li><a href="{{ url_for('add_car') }}">Dodaj auto</a></li>
-                <li><a href="{{ url_for('login') }}">Zaloguj</a></li>
-                <li><a href="#">Rejestracja</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('logout') }}">Zaloguj</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Zaloguj</a></li>
+                    <li><a href="{{ url_for('sign_up') }}">Rejestracja</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
