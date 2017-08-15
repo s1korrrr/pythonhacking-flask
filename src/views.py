@@ -1,21 +1,10 @@
 import time
 
-import os
-from flask import Flask, render_template, jsonify, request, url_for
+from flask import render_template, jsonify, request, url_for
 
-from src.database import db_session, init_engine, init_db
+from src import app
+from src.database import db_session
 from src.models.car import Car
-
-
-app = Flask(__name__)
-app.config.from_object('src.default_settings')
-if 'LOCAL_SETTINGS' in os.environ:
-    app.config.from_envvar('LOCAL_SETTINGS')
-
-
-@app.teardown_appcontext
-def shutdown_session(exception=None):
-    db_session.remove()
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -76,14 +65,4 @@ def add_car():
 def car_form():
     if request.method == 'POST':
         return render_template('car_club.html', name=request.form['name'])
-    if request.method == 'GET':
-        return render_template('form.html', action_url=url_for('car_form'))
-
-
-if __name__ == '__main__':
-    init_engine(app.config['DATABASE_URI'])
-    init_db()
-    app.run(
-        host=app.config.get('SERVER_HOST'),
-        port=app.config.get('SERVER_PORT'),
-    )
+    return render_template('form.html', action_url=url_for('car_form'))

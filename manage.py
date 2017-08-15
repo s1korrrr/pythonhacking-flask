@@ -1,6 +1,6 @@
 from flask_script import Manager, prompt_bool
 
-from src.main import app
+from src.views import app
 
 manager = Manager(app)
 
