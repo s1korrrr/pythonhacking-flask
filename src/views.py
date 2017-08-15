@@ -1,67 +1,52 @@
 import time
+from random import randint
+from datetime import datetime
 
-from flask import render_template, jsonify, request, url_for
+from flask import render_template, jsonify, redirect, url_for, flash
 
 from src import app, db
-from src.models import Car
+from src.forms import CarForm
+from src.models import Car, Owner
 
 
-@app.route('/', methods=['GET', 'POST'])
+# Fake login
+def logged_in_user():
+    return Owner.query.filter_by(name='Patryk').first()
+
+
+@app.route('/')
+@app.route('/index')
 def index():
-    if request.method == 'POST':
-        return render_template('index.html', name=request.form['name'])
-    else:
-        return render_template('index.html')
+    """Main view"""
+    return render_template('index.html', new_cars=Car.newest(5))
+
+
+@app.route('/car', methods=['GET', 'POST'])
+def add_car():
+    form = CarForm()
+    if form.validate_on_submit():
+        plate = form.plate.data
+        description = form.description.data
+        car = Car(owner=logged_in_user(), plate=plate, description=description)
+        db.session.add(car)
+        db.session.commit()
+        # flash('Stored cars: {}'.format(description))
+        return redirect(url_for('index'))
+    return render_template('add_car.html', form=form)
 
 
 @app.route('/some_json')
 def some_json():
-    dict_ = {
-        'hs': 3,
-        'timestamp': time.time(),
+    """Json example"""
+    json_ = {
+        'date': datetime.utcnow(),
+        'epoch time': time.time(),
     }
-    return jsonify(dict_)
+    return jsonify(json_)
  
 
-@app.route('/hs/<int:number>')
-def hackerspace(number):
-    l = [x**3 for x in range(1, number+1)]
-    return str(l)
-
-
-@app.route('/form', methods=['GET', 'POST'])
-def formularz():
-    if request.method == 'POST':
-        return render_template('site.html', name=request.form['name'])
-    if request.method == 'GET':
-        return render_template('form.html', action_url=url_for('formularz'))
-
-
-@app.route('/szablon')
-def szablony():
-    lista_zakupow = ['mleko', 'jajka']
-    return render_template('szablon.html', haha={'costam': 'hahaha, jednak nie'}, zakupy=lista_zakupow)
-
-
-@app.route('/list_cars')
-def car_club():
-    cars = Car.query.all()
-    return render_template('car_club.html', auta=cars)
-
-
-@app.route('/add_car', methods=['POST'])
-def add_car():
-    data = request.json
-    c = Car(id=data['id'], make=data['make'],
-            model=data['model'], plates=data['plates'],
-            dmv_number=data['dmv'], year=data['year'])
-    db.add(c)
-    db.commit()
-    return 'Success\n'
-
-
-@app.route('/car_form')
-def car_form():
-    if request.method == 'POST':
-        return render_template('car_club.html', name=request.form['name'])
-    return render_template('form.html', action_url=url_for('car_form'))
+@app.route('/random-list/<int:length>')
+def random_list(length):
+    """Param example"""
+    rand_list = [randint(1, length) for _ in range(1, length+1)]
+    return str(rand_list)

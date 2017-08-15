@@ -1,15 +1,32 @@
-{% extends 'layout.html' %}
+{% extends 'base.html' %}
+
+{% block title %}
+    <h1>
+        Hackerspace -- Welcome
+    </h1>
+{% endblock %}
 
 {% block main %}
-    <h1>Hackerspace
-        {% if name %}
-         - Witaj {{ name }}!!!
-        {% endif %}
-    </h1>
 
-    <a class="btn btn-info" href="{{ url_for('index') }}" role="button">Start</a>
-    <a class="btn btn-info" href="{{ url_for('formularz') }}" role="button">Formularz</a>
-    <a class="btn btn-info" href="{{ url_for('some_json') }}" role="button">Test Json'a</a>
-    <a class="btn btn-info" href="{{ url_for('car_club') }}" role="button">Car Club</a>
+    <section class="buttons">
+        <a class="btn btn-info" href="{{ url_for('random_list', length=5) }}" role="button">Losowa lista</a>
+        <a class="btn btn-info" href="{{ url_for('some_json') }}" role="button">Test Json'a</a>
+        <a class="btn btn-info" href="{{ url_for('add_car') }}" role="button">Dodaj auto</a>
+    </section>
+
+    <section>
+            <h4>Recently Added</h4>
+            {% if new_cars %}
+                <ul>
+                    {% for car in new_cars %}
+                        <li>
+                            {{ car.owner.name }} -- {{ car.description }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                No cars yet.
+            {% endif %}
+    </section>
 
 {% endblock %}

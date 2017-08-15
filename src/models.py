@@ -6,6 +6,7 @@ from src import db
 
 
 class Car(db.Model):
+    """Car database table"""
     id = db.Column(db.Integer, primary_key=True)
     plate = db.Column(db.Text, nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
@@ -21,6 +22,7 @@ class Car(db.Model):
 
 
 class Owner(db.Model):
+    """Owner database table"""
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(120), unique=True)
