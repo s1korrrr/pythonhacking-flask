@@ -1,6 +1,7 @@
 from flask_script import Manager, prompt_bool
 
 from src import app, db
+from src.models import Car, Owner
 
 manager = Manager(app)
 
@@ -8,8 +9,9 @@ manager = Manager(app)
 @manager.command
 def init_db():
     db.create_all()
-    db.session.add(User(username='Patryk', email='bob1@wp.pl'))
-    db.session.add(User(username='Kacper', email='ala2@wp.pl'))
+    db.session.add(Owner(name='Patryk', email='pat@wp.pl'))
+    db.session.add(Owner(name='Nikodem', email='nik@wp.pl'))
+    db.session.add(Car(plate='GKW 883A6', description='Opel Astra', owner_id=1))
     db.session.commit()
     print('Database has been initialized')
 

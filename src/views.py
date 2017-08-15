@@ -2,7 +2,7 @@ import time
 
 from flask import render_template, jsonify, request, url_for
 
-from src import app
+from src import app, db
 from src.models import Car
 
 
@@ -55,8 +55,8 @@ def add_car():
     c = Car(id=data['id'], make=data['make'],
             model=data['model'], plates=data['plates'],
             dmv_number=data['dmv'], year=data['year'])
-    db_session.add(c)
-    db_session.commit()
+    db.add(c)
+    db.commit()
     return 'Success\n'
 
 
