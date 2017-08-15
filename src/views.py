@@ -40,7 +40,7 @@ def some_json():
     """Json example"""
     json_ = {
         'date': datetime.utcnow(),
-        'epoch time': time.time(),
+        'epoch_time': time.time(),
     }
     return jsonify(json_)
  
