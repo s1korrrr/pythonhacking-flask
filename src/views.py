@@ -34,10 +34,10 @@ def login():
         if user is not None and user.check_password(password):
             should_stay_logged = form.remember_me.data
             login_user(user, should_stay_logged)
-            flash('Logged in successfully as {}'.format(user.name))
+            flash('Zalogowano {}.'.format(user.name))
             next_page = request.args.get('next')
             return redirect(next_page or url_for('index'))
-        flash('Incorrect username of password')
+        flash('Niepoprawny użytkownik lub hasło.')
     return render_template('login.html', form=form)
 
 
@@ -57,7 +57,7 @@ def add_car():
         car = Car(owner=current_user, plate=plate, description=description)
         db.session.add(car)
         db.session.commit()
-        flash('Stored cars: {}'.format(description))
+        flash('Zaposano pojazd: {}'.format(description))
         return redirect(url_for('index'))
     return render_template('add_car.html', form=form)
 
