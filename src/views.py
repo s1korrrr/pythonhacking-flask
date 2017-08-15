@@ -30,7 +30,7 @@ def add_car():
         car = Car(owner=logged_in_user(), plate=plate, description=description)
         db.session.add(car)
         db.session.commit()
-        # flash('Stored cars: {}'.format(description))
+        flash('Stored cars: {}'.format(description))
         return redirect(url_for('index'))
     return render_template('add_car.html', form=form)
 
