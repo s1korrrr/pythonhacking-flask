@@ -6,8 +6,9 @@ from flask import Flask, render_template, jsonify, request, url_for
 from src.database import db_session, init_engine, init_db
 from src.models.car import Car
 
+
 app = Flask(__name__)
-app.config.from_object('default_settings')
+app.config.from_object('src.default_settings')
 if 'LOCAL_SETTINGS' in os.environ:
     app.config.from_envvar('LOCAL_SETTINGS')
 
