@@ -1,6 +1,8 @@
 import os
 
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
 
 from src.database import db_session, init_engine, init_db
 
@@ -10,8 +12,7 @@ app.config.from_object('src.default_settings')
 if 'LOCAL_SETTINGS' in os.environ:
     app.config.from_envvar('LOCAL_SETTINGS')
 
-init_engine(app.config['DATABASE_URI'])
-init_db()
+db = SQLAlchemy(app)
 
 import src.views
 

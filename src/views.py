@@ -3,8 +3,7 @@ import time
 from flask import render_template, jsonify, request, url_for
 
 from src import app
-from src.database import db_session
-from src.models.car import Car
+from src.models import Car
 
 
 @app.route('/', methods=['GET', 'POST'])
