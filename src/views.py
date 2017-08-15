@@ -20,12 +20,13 @@ def load_user(owner_id):
 @app.route('/')
 @app.route('/index')
 def index():
-    """Main view"""
+    """Index view"""
     return render_template('index.html', new_cars=Car.newest(5))
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """Login view"""
     form = LoginForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -43,6 +44,7 @@ def login():
 
 @app.route('/logout')
 def logout():
+    """Logout view"""
     logout_user()
     return redirect(url_for('index'))
 
@@ -50,6 +52,7 @@ def logout():
 @app.route('/car', methods=['GET', 'POST'])
 @login_required
 def add_car():
+    """View for adding new car"""
     form = CarForm()
     if form.validate_on_submit():
         plate = form.plate.data
@@ -73,7 +76,7 @@ def some_json():
  
 
 @app.route('/random-list/<int:length>')
-def random_list(length):
+def random_list(length: int):
     """Param example"""
     rand_list = [randint(1, length) for _ in range(1, length+1)]
     return str(rand_list)

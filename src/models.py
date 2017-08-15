@@ -16,10 +16,11 @@ class Car(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'), nullable=False)
 
     @staticmethod
-    def newest(num):
+    def newest(num: int) -> list:
+        """Return <num> of latest cars"""
         return Car.query.order_by(desc(Car.date)).limit(num)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "<Car '{}': '{}'>".format(self.description, self.plate)
 
 
@@ -33,18 +34,22 @@ class Owner(db.Model, UserMixin):
 
     @property
     def password(self):
+        """Raise when attempt to read password"""
         raise AttributeError('password: write-only field')
 
     @password.setter
-    def password(self, password):
+    def password(self, password: str):
+        """Generate hash using password as seed"""
         self.password_hash = generate_password_hash(password)
 
-    def check_password(self, password):
+    def check_password(self, password: str) -> bool:
+        """Validate if password is correct"""
         return check_password_hash(self.password_hash, password)
 
     @staticmethod
-    def get_by_name(name):
+    def get_by_name(name: str) -> object:
+        """Return owner instance"""
         return Owner.query.filter_by(name=name).first()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return '<Owner %r>' % self.username

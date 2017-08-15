@@ -9,7 +9,7 @@ class CarForm(FlaskForm):
     plate = StringField('rejestracja', validators=[DataRequired()])
     description = StringField('opis', validators=[DataRequired()])
 
-    def validate(self):
+    def validate(self) -> bool:
         """Additional validation goes here"""
         if not FlaskForm.validate(self):
             return False
@@ -17,6 +17,7 @@ class CarForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
+    """Login form"""
     username = StringField('Użytkownik', validators=[DataRequired()])
     password = PasswordField('Hasło', validators=[DataRequired()])
     remember_me = BooleanField('Pozostań zalogowany')
