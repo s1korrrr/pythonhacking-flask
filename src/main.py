@@ -1,8 +1,10 @@
-import os, time
+import time
+
+import os
 from flask import Flask, render_template, jsonify, request, url_for
-from database import db_session, init_engine, init_db
-from models.car import Car
-from random import randint
+
+from src.database import db_session, init_engine, init_db
+from src.models.car import Car
 
 app = Flask(__name__)
 app.config.from_object('default_settings')
