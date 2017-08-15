@@ -26,7 +26,7 @@ source ~/projekty/venv/pythonhacking-flask/bin/activate
 Pobranie źródeł:
 ```bash
 cd ~/projekty/
-git clone git@github.com:hs3city/flask_hs.git
+git clone https://github.com/hs3city/pythonhacking-flask.git
 ```
 
 ### Instalacja zależności
@@ -36,8 +36,21 @@ cd ~/projekty/flask_hs/
 pip install --upgrade -r requirements.txt
 ```
 
-Uruchomienie aplikacji
+### Uruchomienie aplikacji
 
 ```bash
-python main.py
+python manage.py runserver
 ```
+
+### Inicjalizacja bazy danych
+
+```bash
+python manage.py init_db
+```
+
+### Czyszczenie bazy danych
+
+```bash
+python manage.py drop_db
+```
+
