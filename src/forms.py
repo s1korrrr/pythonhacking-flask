@@ -1,12 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField
+from wtforms.fields import StringField, PasswordField,\
+    BooleanField, SubmitField
 from wtforms.validators import DataRequired
 
 
 class CarForm(FlaskForm):
     """Form for adding new car"""
-    plate = StringField('plate', validators=[DataRequired()])
-    description = StringField('description', validators=[DataRequired()])
+    plate = StringField('rejestracja', validators=[DataRequired()])
+    description = StringField('opis', validators=[DataRequired()])
 
     def validate(self):
         """Additional validation goes here"""
@@ -14,3 +15,9 @@ class CarForm(FlaskForm):
             return False
         return True
 
+
+class LoginForm(FlaskForm):
+    username = StringField('Użytkownik', validators=[DataRequired()])
+    password = PasswordField('Hasło', validators=[DataRequired()])
+    remember_me = BooleanField('Pozostań zalogowany')
+    submit = SubmitField('Zaloguj')

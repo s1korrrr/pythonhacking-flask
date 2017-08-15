@@ -1,6 +1,8 @@
 from datetime import datetime
 
 from sqlalchemy import desc
+from flask_login import UserMixin
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from src import db
 
@@ -21,12 +23,28 @@ class Car(db.Model):
         return "<Car '{}': '{}'>".format(self.description, self.plate)
 
 
-class Owner(db.Model):
+class Owner(db.Model, UserMixin):
     """Owner database table"""
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(120), unique=True)
     cars = db.relationship('Car', backref='owner', lazy='dynamic')
+    password_hash = db.Column(db.String)
+
+    @property
+    def password(self):
+        raise AttributeError('password: write-only field')
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    @staticmethod
+    def get_by_name(name):
+        return Owner.query.filter_by(name=name).first()
 
     def __repr__(self):
         return '<Owner %r>' % self.username
