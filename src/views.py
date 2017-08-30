@@ -21,7 +21,7 @@ def load_user(owner_id):
 @app.route('/index')
 def index():
     """Index view"""
-    return render_template('index.html', new_cars=Car.newest(5))
+    return render_template('meta.html')
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -89,7 +89,7 @@ def some_json():
         'epoch_time': time.time(),
     }
     return jsonify(json_)
- 
+
 
 @app.route('/random-list/<int:length>')
 def random_list(length: int):
