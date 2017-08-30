@@ -1,9 +1,9 @@
 
 <nav>
-  <div class="nav-wrapper">
-    <a href="{{ url_for('index') }}" class="brand-logo center">Hackerspace - TODO</a>
+  <div class="nav-wrapper container">
+    <a href="{{ url_for('index') }}" class="brand-logo left">BestTODO</a>
     <ul id="nav-mobile" class="right">
-      <li><a href="{{ url_for('add_car') }}">Dodaj auto</a></li>
+      <li><a href="{{ url_for('add_car') }}" class="waves-effect waves-light btn">Dodaj auto</a></li>
       {% if current_user.is_authenticated %}
       <li><a href="{{ url_for('logout') }}">Wyloguj</a></li>
       {% else %}
@@ -13,3 +13,4 @@
     </ul>
   </div>
 </nav>
+<br><br>

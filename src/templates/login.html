@@ -1,23 +1,24 @@
+
 {% extends "base.html" %}
 {% from "form_macro.html" import render_field %}
-
-
-{% block title %}
-    Hackerspace -- Zaloguj
+{% block title %} Hackerspace -- Zaloguj
 {% endblock %}
-
 {% block main %}
-    <section>
-        <br>
-        <h2 style="clear:both">Zaloguj się:</h2>
-        <form action="" method="post">
-            {{ form.hidden_tag() }}
-            <table>
-                {{ render_field(form.username, size=50) }}
-                {{ render_field(form.password, size=50) }}
-                {{ render_field(form.remember_me) }}
-                {{ render_field(form.submit) }}
-            </table>
-        </form>
-    </section>
+<div class="container">
+  <section>
+    <br>
+    <h3>Logowanie</h3>
+    <form action="" method="post">
+
+      {{ form.hidden_tag() }}
+      <!-- <table> -->
+        {{ render_field(form.username, size=50) }}
+        {{ render_field(form.password, size=50) }}
+        {{ render_field(form.remember_me) }}
+        {{ render_field(form.submit) }}
+      <!-- </table> -->
+    </form>
+  </section>
+</div>
+
 {% endblock %}
