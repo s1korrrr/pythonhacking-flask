@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'meta.html' %}
 
 {% block title %}
     Hackerspace -- Witaj!
@@ -8,7 +8,7 @@
 
     <section class="buttons">
         <br>
-        <h2>Pierwsze spotkanie:</h2>
+        <h4>Pierwsze spotkanie:</h4>
             <ul>
                 <li><a href="{{ url_for('random_list', length=5) }}" role="button">Losowa lista</a></li>
                 <li><a href="{{ url_for('some_json') }}" role="button">Test Json'a</a></li>
@@ -16,7 +16,7 @@
     </section>
 
     <section>
-        <h2>Ostatnio dodane auta:</h2>
+        <h4>Ostatnio dodane auta:</h4>
         {% if new_cars %}
             <ul>
                 {% for car in new_cars %}

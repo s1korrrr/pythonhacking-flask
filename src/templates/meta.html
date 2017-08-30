@@ -1,5 +1,3 @@
-{% from "nav.html" import nav %}
-
 <!DOCTYPE html>
 <html>
 
@@ -18,8 +16,8 @@
 
 <body>
   <!-- Navigation / Header -->
+  {% include "nav.html" %}
   {% block nav %}
-    {{ nav() }}
   {% endblock %}
   <!-- Main content -->
   {% block main %}
