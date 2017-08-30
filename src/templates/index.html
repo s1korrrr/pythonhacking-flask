@@ -5,10 +5,12 @@
 {% endblock %}
 
 {% block main %}
+  <div class="container">
+
 
     <section class="buttons">
         <br>
-        <h4>Pierwsze spotkanie:</h4>
+        <h4>Pierwsze spotkanie</h4>
             <ul>
                 <li><a href="{{ url_for('random_list', length=5) }}" role="button">Losowa lista</a></li>
                 <li><a href="{{ url_for('some_json') }}" role="button">Test Json'a</a></li>
@@ -16,18 +18,31 @@
     </section>
 
     <section>
-        <h4>Ostatnio dodane auta:</h4>
+        <h4>Ostatnio dodane auta</h4>
         {% if new_cars %}
-            <ul>
-                {% for car in new_cars %}
-                    <li>
-                        {{ car.owner.name }} -- {{ car.description }} -- {{ car.plate }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
+        <table>
+    <thead>
+      <tr>
+          <th>Właściciel</th>
+          <th>Opis</th>
+          <th>Blacha</th>
+      </tr>
+    </thead>
+
+    <tbody>
+        {% for car in new_cars %}
+        <tr>
+          <td>{{ car.owner.name }}</td>
+          <td>{{ car.description }}</td>
+          <td>{{ car.plate }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
         {% else %}
             No cars yet.
         {% endif %}
     </section>
+  </div>
 
 {% endblock %}

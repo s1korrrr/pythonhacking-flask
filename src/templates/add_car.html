@@ -7,22 +7,16 @@ Hackerspace -- Add car
 {% endblock %}
 
 {% block main %}
+  <div class="container">
     <section>
         <br>
         <h2>Add a new car</h2>
         <form action="" method="post">
             {{ form.hidden_tag() }}
-            <table>
-                {{ render_field(form.plate, size=50) }}
-                {{ render_field(form.description, size=50) }}
 
-                <tr class="submit">
-                    <td></td>
-                    <td>
-                        <button type="submit">Submit</button>
-                    </td>
-                </tr>
-            </table>
-        </form>
+            {{ render_field(form.plate, size=50) }}
+            {{ render_field(form.description, size=50) }}
+            <button type="submit" class="submit btn">Submit</button>
     </section>
+  </div>
 {% endblock %}

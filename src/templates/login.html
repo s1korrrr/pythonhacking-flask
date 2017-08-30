@@ -15,7 +15,10 @@
         {{ render_field(form.username, size=50) }}
         {{ render_field(form.password, size=50) }}
         {{ render_field(form.remember_me) }}
-        {{ render_field(form.submit) }}
+        <!-- NOTE: Nie można dodać klasy btn xD -->
+        {# {{ render_field(form.submit) }} #}
+        <br>
+        <button class="submit btn">Zaloguj</button>
       <!-- </table> -->
     </form>
   </section>
