@@ -11,18 +11,19 @@
 
 
   <!--Let browser know website is optimized for mobile-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 </head>
 
 <body>
   <!-- Navigation / Header -->
-  {% include "nav.html" %}
-  {% block nav %}
-  {% endblock %}
-  <!-- Main content -->
-  {% block main %}
+  {% block nav %} {% include "nav.html" %} {% endblock %}
+  <!-- Main -->
   <main>
+    <!-- Flash notifications -->
+    {% block flash %} {% include "flash.html"%} {% endblock %}
+    <!-- Main content -->
+    {% block main %}
     <div class="container">
       <div class="card">
         <div class="card-content">
@@ -42,11 +43,10 @@
         </div>
       </div>
     </div>
+    {% endblock %}
   </main>
-  {% endblock %}
   <!-- Footer -->
-  <br><br><br><br>
-  {% block footer %}
+  <br><br><br><br> {% block footer %}
   <footer class="page-footer">
     <div class="container">
       <div class="row">
