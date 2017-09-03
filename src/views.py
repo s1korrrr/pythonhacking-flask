@@ -76,7 +76,7 @@ def add_car():
         car = Car(owner=current_user, plate=plate, description=description)
         db.session.add(car)
         db.session.commit()
-        flash('Zaposano pojazd: {}'.format(description))
+        flash('Zapisano pojazd: {}'.format(description))
         return redirect(url_for('index'))
     return render_template('add_car.html', form=form)
 
@@ -89,7 +89,7 @@ def some_json():
         'epoch_time': time.time(),
     }
     return jsonify(json_)
- 
+
 
 @app.route('/random-list/<int:length>')
 def random_list(length: int):

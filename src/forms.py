@@ -48,8 +48,8 @@ class SignInForm(FlaskForm):
 
     def validate_email(self, email_field):
         if Owner.query.filter_by(email=email_field.data).first():
-            raise ValidationError('Adres email jest już zajęcty.')
+            raise ValidationError('Adres email jest już zajęty.')
 
     def validate_owner(self, owner_field):
         if Owner.query.filter_by(email=owner_field.data).first():
-            raise ValidationError('Uzytkownik jest już zajęcty.')
+            raise ValidationError('Użytkownik jest już zajęty.')

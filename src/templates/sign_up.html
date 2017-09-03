@@ -7,22 +7,23 @@
 {% endblock %}
 
 {% block main %}
-    <section>
+    <section class="container">
         <br>
-        <h2 style="clear:both">Zaloguj się:</h2>
+        <h3>Rejestracja</h3>
         <form action="" method="post">
+
             {{ form.hidden_tag() }}
-            <table>
+            <div class="">
                 {{ render_field(form.owner, size=50) }}
                 {{ render_field(form.email, size=50) }}
                 {{ render_field(form.password, size=50) }}
                 {{ render_field(form.password2, size=50) }}
-
-                <tr>
+                <button class="submit btn pink accent-4">Zatwierdź</button>
+                <!-- <tr>
                     <td></td>
-                    <td><button class="submit">Zatwierdź</button></td>
-                </tr>
-            </table>
+                    <td></td>
+                </tr> -->
+            </div>
         </form>
     </section>
 {% endblock %}
