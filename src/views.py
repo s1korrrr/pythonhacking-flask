@@ -9,7 +9,7 @@ from flask_login import login_required, login_user,\
 
 from src import app, db, login_manager
 from src.forms import CarForm, LoginForm, SignInForm
-from src.models import Car, Owner
+from src.models import User
 
 
 @login_manager.user_loader

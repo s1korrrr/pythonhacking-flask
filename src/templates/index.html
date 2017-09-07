@@ -1,35 +1,20 @@
 {% extends 'base.html' %}
-
-{% block title %}
-    Hackerspace -- Witaj!
-{% endblock %}
-
+{% block title %} Hackerspace -- Witaj! {% endblock %}
 {% block main %}
-  <div class="container">
+<div class="container">
 
-
-    <section class="buttons">
-        <br>
-        <h4>Pierwsze spotkanie</h4>
-            <ul>
-                <li><a href="{{ url_for('random_list', length=5) }}" role="button">Losowa lista</a></li>
-                <li><a href="{{ url_for('some_json') }}" role="button">Test Json'a</a></li>
-            </ul>
-    </section>
-
-    <section>
-        <h4>Ostatnio dodane auta</h4>
-        {% if new_cars %}
-        <table>
-    <thead>
-      <tr>
+  <section>
+    <h4>Ostatnio dodane auta</h4> {% if new_cars %}
+    <table>
+      <thead>
+        <tr>
           <th>Właściciel</th>
           <th>Opis</th>
           <th>Blacha</th>
-      </tr>
-    </thead>
+        </tr>
+      </thead>
 
-    <tbody>
+      <tbody>
         {% for car in new_cars %}
         <tr>
           <td>{{ car.owner.name }}</td>
@@ -37,12 +22,11 @@
           <td>{{ car.plate }}</td>
         </tr>
         {% endfor %}
-    </tbody>
-  </table>
-        {% else %}
-            No cars yet.
-        {% endif %}
-    </section>
-  </div>
+      </tbody>
+    </table>
+    {% else %} No cars yet. {% endif %}
+  </section>
+  
+</div>
 
 {% endblock %}

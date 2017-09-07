@@ -4,7 +4,7 @@ from wtforms.fields import StringField, PasswordField,\
 from wtforms.validators import DataRequired, Length, Regexp, \
     EqualTo, Email, ValidationError
 
-from src.models import Owner
+from src.models import User
 
 
 class CarForm(FlaskForm):
@@ -28,7 +28,7 @@ class LoginForm(FlaskForm):
 
 
 class SignInForm(FlaskForm):
-    owner = StringField(
+    user = StringField(
         'Użytkownik', validators=[
             DataRequired(), Length(3, 80),
             Regexp('^[A-Za-z0-9_]{3,}$',
@@ -47,9 +47,9 @@ class SignInForm(FlaskForm):
     password2 = PasswordField('Potwierdz hasło', validators=[DataRequired()])
 
     def validate_email(self, email_field):
-        if Owner.query.filter_by(email=email_field.data).first():
+        if User.query.filter_by(email=email_field.data).first():
             raise ValidationError('Adres email jest już zajęty.')
 
     def validate_owner(self, owner_field):
-        if Owner.query.filter_by(email=owner_field.data).first():
+        if User.query.filter_by(email=owner_field.data).first():
             raise ValidationError('Użytkownik jest już zajęty.')
