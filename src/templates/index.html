@@ -6,18 +6,7 @@
 
 {% block main %}
   <div class="container">
-
-
     <section class="buttons">
-        <br>
-        <h4>Pierwsze spotkanie</h4>
-            <ul>
-                <li><a href="{{ url_for('random_list', length=5) }}" role="button">Losowa lista</a></li>
-                <li><a href="{{ url_for('some_json') }}" role="button">Test Json'a</a></li>
-            </ul>
-    </section>
-
-    <section>
         <h4>Ostatnio dodane auta</h4>
         {% if new_cars %}
         <table>
