@@ -6,30 +6,28 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from src import db
 
-
-class Car(db.Model):
-    """Car database table"""
+class Task(db.Model):
+    """Task database tables"""
     id = db.Column(db.Integer, primary_key=True)
-    plate = db.Column(db.Text, nullable=False)
-    date = db.Column(db.DateTime, default=datetime.utcnow)
     description = db.Column(db.String(300))
-    owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'), nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    date_due = db.Column(db.DateTime)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     @staticmethod
     def newest(num: int) -> list:
         """Return <num> of latest cars"""
-        return Car.query.order_by(desc(Car.date)).limit(num)
+        return Task.query.order_by(desc(Task.date_created)).limit(num)
 
     def __repr__(self) -> str:
-        return "<Car '{}': '{}'>".format(self.description, self.plate)
+        return "<Task '{}': '{}'>".format(self.description, self.date_created)
 
-
-class Owner(db.Model, UserMixin):
-    """Owner database table"""
+class User(db.Model, UserMixin):
+    """User database table"""
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(120), unique=True)
-    cars = db.relationship('Car', backref='owner', lazy='dynamic')
+    cars = db.relationship('Task', backref='user', lazy='dynamic')
     password_hash = db.Column(db.String)
 
     @property
@@ -49,7 +47,7 @@ class Owner(db.Model, UserMixin):
     @staticmethod
     def get_by_name(name: str) -> object:
         """Return owner instance"""
-        return Owner.query.filter_by(name=name).first()
+        return User.query.filter_by(name=name).first()
 
     def __repr__(self) -> str:
-        return '<Owner %r>' % self.username
+        return '<User %r>' % self.username

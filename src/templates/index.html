@@ -1,37 +1,30 @@
 {% extends 'base.html' %}
-
-{% block title %}
-    Hackerspace -- Witaj!
-{% endblock %}
-
+{% block title %} Hackerspace -- Witaj! {% endblock %}
 {% block main %}
-  <div class="container">
-    <section class="buttons">
-        <h4>Ostatnio dodane auta</h4>
-        {% if new_cars %}
-        <table>
-    <thead>
-      <tr>
+<div class="container">
+
+  <section>
+    <h4>Ostatnio dodane zadania</h4> {% if new_tasks %}
+    <table>
+      <thead>
+        <tr>
           <th>Właściciel</th>
           <th>Opis</th>
-          <th>Blacha</th>
-      </tr>
-    </thead>
+        </tr>
+      </thead>
 
-    <tbody>
-        {% for car in new_cars %}
+      <tbody>
+        {% for task in new_tasks %}
         <tr>
-          <td>{{ car.owner.name }}</td>
-          <td>{{ car.description }}</td>
-          <td>{{ car.plate }}</td>
+          <td>{{ task.user.name }}</td>
+          <td>{{ task.description }}</td>
         </tr>
         {% endfor %}
-    </tbody>
-  </table>
-        {% else %}
-            No cars yet.
-        {% endif %}
-    </section>
-  </div>
+      </tbody>
+    </table>
+    {% else %} No cars yet. {% endif %}
+  </section>
+
+</div>
 
 {% endblock %}

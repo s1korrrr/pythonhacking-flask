@@ -9,31 +9,31 @@ from flask_login import login_required, login_user,\
 
 from src import app, db, login_manager
 from src.forms import CarForm, LoginForm, SignInForm
-from src.models import Car, Owner
+from src.models import User, Task
 
 
 @login_manager.user_loader
-def load_user(owner_id):
-    return Owner.query.get(int(owner_id))
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 @app.route('/')
 @app.route('/index')
 def index():
     """Index view"""
-    return render_template('index.html', new_cars=Car.newest(5))
+    return render_template('index.html', new_tasks=Task.newest(5))
 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def sign_up():
     form = SignInForm()
     if form.validate_on_submit():
-        owner = Owner(
-            name=form.owner.data,
+        user = User(
+            name=form.user.data,
             password=form.password.data,
             email=form.email.data,
         )
-        db.session.add(owner)
+        db.session.add(user)
         db.session.commit()
         flash('Rejestracja zakończyła się pomyślnie!')
         return redirect(url_for('login'))
@@ -47,7 +47,7 @@ def login():
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
-        user = Owner.get_by_name(username)
+        user = User.get_by_name(username)
         if user is not None and user.check_password(password):
             should_stay_logged = form.remember_me.data
             login_user(user, should_stay_logged)
@@ -65,18 +65,18 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/car', methods=['GET', 'POST'])
+@app.route('/task', methods=['GET', 'POST'])
 @login_required
 def add_car():
     """View for adding new car"""
     form = CarForm()
     if form.validate_on_submit():
-        plate = form.plate.data
         description = form.description.data
-        car = Car(owner=current_user, plate=plate, description=description)
-        db.session.add(car)
+        # TODO: add date due
+        task = Task(user=current_user, description=description)
+        db.session.add(task)
         db.session.commit()
-        flash('Zapisano pojazd: {}'.format(description))
+        flash('Zapisano zadanie: {}'.format(description))
         return redirect(url_for('index'))
     return render_template('add_car.html', form=form)
 
