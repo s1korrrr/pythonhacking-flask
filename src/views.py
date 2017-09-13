@@ -89,10 +89,3 @@ def some_json():
         'epoch_time': time.time(),
     }
     return jsonify(json_)
-
-
-@app.route('/random-list/<int:length>')
-def random_list(length: int):
-    """Param example"""
-    rand_list = [randint(1, length) for _ in range(1, length+1)]
-    return str(rand_list)
