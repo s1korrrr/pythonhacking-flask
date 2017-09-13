@@ -21,7 +21,7 @@ def load_user(user_id):
 @app.route('/index')
 def index():
     """Index view"""
-    return render_template('index.html', new_cars=Task.newest(5))
+    return render_template('index.html', new_tasks=Task.newest(5))
 
 
 @app.route('/signup', methods=['GET', 'POST'])

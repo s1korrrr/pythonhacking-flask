@@ -4,21 +4,20 @@
 <div class="container">
 
   <section>
-    <h4>Ostatnio dodane auta</h4> {% if new_cars %}
+    <h4>Ostatnio dodane zadania</h4> {% if new_tasks %}
     <table>
       <thead>
         <tr>
           <th>Właściciel</th>
           <th>Opis</th>
-          <th>Blacha</th>
         </tr>
       </thead>
 
       <tbody>
-        {% for car in new_cars %}
+        {% for task in new_tasks %}
         <tr>
-          <td>{{ car.user.name }}</td>
-          <td>{{ car.description }}</td>
+          <td>{{ task.user.name }}</td>
+          <td>{{ task.description }}</td>
         </tr>
         {% endfor %}
       </tbody>
