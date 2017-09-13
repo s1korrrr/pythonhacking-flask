@@ -71,10 +71,8 @@ def add_car():
     """View for adding new car"""
     form = CarForm()
     if form.validate_on_submit():
-        # plate = form.plate.data
         description = form.description.data
         # TODO: add date due
-        # date_due = form.date_due.data
         task = Task(user=current_user, description=description)
         db.session.add(task)
         db.session.commit()

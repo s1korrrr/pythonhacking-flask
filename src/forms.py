@@ -9,7 +9,6 @@ from src.models import User, Task
 
 class CarForm(FlaskForm):
     """Form for adding new car"""
-    # plate = StringField('Nr rejestracji', validators=[DataRequired()])
     description = StringField('Zadanie', validators=[DataRequired()])
 
     def validate(self) -> bool:

@@ -22,14 +22,6 @@ class Task(db.Model):
     def __repr__(self) -> str:
         return "<Task '{}': '{}'>".format(self.description, self.date_created)
 
-# class Car(db.Model):
-#     """Car database table"""
-#     id = db.Column(db.Integer, primary_key=True)
-#     plate = db.Column(db.Text, nullable=False)
-#     date = db.Column(db.DateTime, default=datetime.utcnow)
-#     description = db.Column(db.String(300))
-#     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'), nullable=False)
-
 class User(db.Model, UserMixin):
     """User database table"""
     id = db.Column(db.Integer, primary_key=True)
