@@ -17,10 +17,10 @@ class Task(db.Model):
     @staticmethod
     def newest(num: int) -> list:
         """Return <num> of latest cars"""
-        return Car.query.order_by(desc(Car.date)).limit(num)
+        return Task.query.order_by(desc(Task.date_created)).limit(num)
 
     def __repr__(self) -> str:
-        return "<Car '{}': '{}'>".format(self.description, self.plate)
+        return "<Task '{}': '{}'>".format(self.description, self.date_created)
 
 # class Car(db.Model):
 #     """Car database table"""
@@ -35,7 +35,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(120), unique=True)
-    cars = db.relationship('Car', backref='owner', lazy='dynamic')
+    cars = db.relationship('Task', backref='user', lazy='dynamic')
     password_hash = db.Column(db.String)
 
     @property

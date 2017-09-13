@@ -13,8 +13,7 @@ Hackerspace -- Add car
         <h2>Add a new car</h2>
         <form action="" method="post">
             {{ form.hidden_tag() }}
-
-            {{ render_field(form.plate, size=50) }}
+            
             {{ render_field(form.description, size=50) }}
             <button type="submit" class="submit btn pink accent-4">Submit</button>
     </section>

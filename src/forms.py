@@ -4,13 +4,13 @@ from wtforms.fields import StringField, PasswordField,\
 from wtforms.validators import DataRequired, Length, Regexp, \
     EqualTo, Email, ValidationError
 
-from src.models import User
+from src.models import User, Task
 
 
 class CarForm(FlaskForm):
     """Form for adding new car"""
-    plate = StringField('Nr rejestracji', validators=[DataRequired()])
-    description = StringField('Nazwa auta', validators=[DataRequired()])
+    # plate = StringField('Nr rejestracji', validators=[DataRequired()])
+    description = StringField('Zadanie', validators=[DataRequired()])
 
     def validate(self) -> bool:
         """Additional validation goes here"""

@@ -17,16 +17,15 @@
       <tbody>
         {% for car in new_cars %}
         <tr>
-          <td>{{ car.owner.name }}</td>
+          <td>{{ car.user.name }}</td>
           <td>{{ car.description }}</td>
-          <td>{{ car.plate }}</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
     {% else %} No cars yet. {% endif %}
   </section>
-  
+
 </div>
 
 {% endblock %}
