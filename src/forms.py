@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, PasswordField,\
-    BooleanField, SubmitField
+    BooleanField, SubmitField, DateField
 from wtforms.validators import DataRequired, Length, Regexp, \
     EqualTo, Email, ValidationError
 
@@ -10,7 +10,8 @@ from src.models import User, Task
 class TaskForm(FlaskForm):
     """Form for adding new car"""
     description = StringField('Zadanie', validators=[DataRequired()])
-    # date_due
+    date_due = DateField('Deadline', validators=[DataRequired()])
+
     def validate(self) -> bool:
         """Additional validation goes here"""
         if not FlaskForm.validate(self):

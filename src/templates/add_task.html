@@ -13,9 +13,10 @@ Dodaj zadanie
         <h2>Dodaj Zadanie</h2>
         <form action="" method="post">
             {{ form.hidden_tag() }}
-
             {{ render_field(form.description, size=50) }}
+            {{ render_field(form.date_due, size=50) }}
             <button type="submit" class="submit btn pink accent-4">Dodaj</button>
+        </form>
     </section>
   </div>
 {% endblock %}

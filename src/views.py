@@ -76,8 +76,11 @@ def add_task():
     form = TaskForm()
     if form.validate_on_submit():
         description = form.description.data
+        date_due = form.date_due.data
         # TODO: add date due
-        task = Task(user=current_user, description=description)
+        task = Task(user=current_user,
+                    description=description,
+                    date_due=date_due)
         db.session.add(task)
         db.session.commit()
         flash('Zapisano zadanie: {}'.format(description))
