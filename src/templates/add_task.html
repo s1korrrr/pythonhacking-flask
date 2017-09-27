@@ -14,9 +14,32 @@ Dodaj zadanie
         <form action="" method="post">
             {{ form.hidden_tag() }}
             {{ render_field(form.description, size=50) }}
-            {{ render_field(form.date_due, size=50) }}
+            <div class="input-field">
+              {{ form.date_due(class_="datepicker") | safe }}
+              {{ form.date_due.label }}
+
+              {% if form.date_due.errors %}
+                {% for error in form.date_due.errors %}
+                  <span class="new badge red" data-badge-caption="{{ error }}"></span>
+                {% endfor %}
+              {% endif %}
+            </div>
             <button type="submit" class="submit btn pink accent-4">Dodaj</button>
         </form>
     </section>
   </div>
+{% endblock %}
+
+<!-- Initialization of datepicker -->
+{% block init %}
+<script type="text/javascript">
+$('.datepicker').pickadate({
+  selectMonths: true, // Creates a dropdown to control month
+  selectYears: 15, // Creates a dropdown of 15 years to control year,
+  today: 'Today',
+  clear: 'Clear',
+  close: 'Ok',
+  closeOnSelect: false // Close upon selecting a date,
+});
+</script>
 {% endblock %}
